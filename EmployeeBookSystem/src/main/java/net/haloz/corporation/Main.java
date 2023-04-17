@@ -25,11 +25,10 @@ public class Main {
                     Department.DEPARTMENT_5, 40000d);
             employeeBook.addEmployee("Margaret", "Barkalova", "Sergevna",
                     Department.DEPARTMENT_2, 45000d);
-            employeeBook.addEmployee(new Employee("EEEE", "AAAA", "VVVV"),
-                    Department.DEPARTMENT_1, 10d);
             outputEmployees();
             employeeBook.deleteEmployee(0);
             employeeBook.changeEmployeeDepartment(1, Department.DEPARTMENT_5);
+
 
         } catch (HashMapEmployeeException | EmployeeException e) {
             throw new RuntimeException(e);

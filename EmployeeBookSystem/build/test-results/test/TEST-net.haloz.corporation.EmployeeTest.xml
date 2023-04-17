@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="net.haloz.corporation.EmployeeTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2023-04-17T11:32:37" hostname="LAPTOP-DOSAI9S0" time="0.066">
+  <properties/>
+  <testcase name="notCreateEmployeeWithInvalidData()" classname="net.haloz.corporation.EmployeeTest" time="0.031"/>
+  <testcase name="employeeWasDeleted()" classname="net.haloz.corporation.EmployeeTest" time="0.012"/>
+  <testcase name="getEmployeeDataInBase()" classname="net.haloz.corporation.EmployeeTest" time="0.007"/>
+  <testcase name="employeeDepartmentWasChangedInTwoWays()" classname="net.haloz.corporation.EmployeeTest" time="0.002"/>
+  <testcase name="employeeDoesNotExistInBase()" classname="net.haloz.corporation.EmployeeTest" time="0.002"/>
+  <testcase name="employeeSalaryWasChangedInTwoWays()" classname="net.haloz.corporation.EmployeeTest" time="0.002"/>
+  <system-out><![CDATA[Base of employees is created.
+Base of employees is created.
+[[Id: 0; Surname: Alexander; Name: Murno; FathersName: Vitaliych; Department: DEPARTMENT_5; Salary: 40000,000000], [Id: 1; Surname: Alex; Name: Mironov; FathersName: Ivanovich; Department: DEPARTMENT_2; Salary: 200000,000000]]
+[[Id: 1; Surname: Alex; Name: Mironov; FathersName: Ivanovich; Department: DEPARTMENT_2; Salary: 200000,000000]]
+Base of employees is created.
+[[Id: 2; Surname: Barkalov; Name: Oleg; FathersName: Alenovich; Department: DEPARTMENT_1; Salary: 23000,000000]]
+Base of employees is created.
+[[Id: 3; Surname: Alexander; Name: Murno; FathersName: Vitaliych; Department: DEPARTMENT_5; Salary: 40000,000000]]
+Base of employees is created.
+[[Id: 4; Surname: Alex; Name: Mironov; FathersName: Ivanovich; Department: DEPARTMENT_2; Salary: 200000,000000]]
+Base of employees is created.
+[[Id: 5; Surname: Alexander; Name: Murno; FathersName: Vitaliych; Department: DEPARTMENT_5; Salary: 40000,000000]]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
