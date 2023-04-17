@@ -15,23 +15,17 @@ public class Employee {
     private Department department;
     private double salary = 0.0d;
 
-    public Employee(String newSurname, String newName, String newFathersName) throws EmployeeException {
-        if (newSurname.isEmpty() || newName.isEmpty() || newFathersName.isEmpty()) {
+    public  Employee(String newSurname, String newName, String newFathersName, Department newDepartment, Double newSalary) throws EmployeeException {
+        if (newSurname.isEmpty() || newName.isEmpty() || newFathersName.isEmpty() || newDepartment == null || newSalary < 0d) {
             throw new EmployeeException("Invalid employee data");
         }
         employeeId = id;
         surname = newSurname;
         name = newName;
         fathersName = newFathersName;
-        id++;
-    }
-    public  Employee(String newSurname, String newName, String newFathersName, Department newDepartment, Double newSalary) throws EmployeeException {
-        this(newSurname, newName, newFathersName);
-        if (newDepartment == null || newSalary < 0d) {
-            throw new EmployeeException("Invalid employee data");
-        }
         department = newDepartment;
         salary = newSalary;
+        id++;
     }
 
     public void setSalary(double salary) throws EmployeeException {

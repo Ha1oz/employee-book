@@ -16,46 +16,27 @@ public class EmployeeBook {
     public EmployeeBook(){
         System.out.println("Base of employees is created.");
     }
-    public void addEmployee(String surname, String name, String fathersName, Department department, Double salary) throws HashMapEmployeeException, EmployeeException {
-        if (surname.isEmpty() || name.isEmpty() || fathersName.isEmpty() || salary < 0d) {
-            throw new HashMapEmployeeException("Invalid employee data");
-        }
-
+    public void addEmployee(String surname, String name, String fathersName, Department department, Double salary) throws EmployeeException{
         Employee employee = new Employee(surname, name, fathersName, department, salary);
 
-        if (employeeHashMap.containsValue(employee)) {
-            throw new HashMapEmployeeException("The employee already exists in the base");
-        }
-
         employeeHashMap.put(employee.getEmployeeId(), employee);
     }
-    public void addEmployee(Employee employee, Department department, Double salary) throws HashMapEmployeeException, EmployeeException {
-
-        employee.setDepartment(department);
-        employee.setSalary(salary);
-
-        if (employeeHashMap.containsValue(employee)) {
-            throw new HashMapEmployeeException("The employee already exists in the base");
-        }
-
-        employeeHashMap.put(employee.getEmployeeId(), employee);
-    }
-    public Employee getEmployee(Integer id) throws HashMapEmployeeException {
+    public Employee getEmployee(Integer employeeId) throws HashMapEmployeeException {
         if (employeeHashMap.isEmpty()) {
             throw new HashMapEmployeeException("The employee base is empty");
         }
 
-        return employeeHashMap.get(id);
+        return employeeHashMap.get(employeeId);
     }
-    public void deleteEmployee(Integer id) throws HashMapEmployeeException {
+    public void deleteEmployee(Integer employeeId) throws HashMapEmployeeException {
         if (employeeHashMap.isEmpty()) {
             throw new HashMapEmployeeException("The employee base is empty");
         }
-        if (!employeeHashMap.containsKey(id)) {
-            throw new HashMapEmployeeException("The employee with id " + id + " not found");
+        if (!employeeHashMap.containsKey(employeeId)) {
+            throw new HashMapEmployeeException("The employee with id " + employeeId + " not found");
         }
 
-        employeeHashMap.remove(id);
+        employeeHashMap.remove(employeeId);
     }
 
 
