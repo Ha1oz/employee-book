@@ -38,16 +38,12 @@ public class EmployeeBook {
 
         employeeHashMap.remove(employeeId);
     }
-
-
     public List<Employee> getAllEmployees() {
         return new ArrayList<>(employeeHashMap.values());
     }
-
     public List<Employee> getAllEmployees(Department department) {
         return new ArrayList<>(employeeHashMap.values().stream().filter(c -> c.getDepartment().getId() == department.getId()).toList());
     }
-
     public Double monthlyPaymentAmount() {
 
         if (employeeHashMap.isEmpty()) {
@@ -62,7 +58,6 @@ public class EmployeeBook {
 
         return sum;
     }
-
     public Double monthlyPaymentAmount(Department department) {
 
 
@@ -80,7 +75,6 @@ public class EmployeeBook {
 
         return sum;
     }
-
     public Employee employeeWithMinSalary() {
 
         if (employeeHashMap.isEmpty()) {
@@ -148,7 +142,6 @@ public class EmployeeBook {
                 .filter(c -> c.getDepartment().getId() == department.getId())
                 .count();
     }
-
     public String fullNamesEmployees() {
 
         if (employeeHashMap.isEmpty()) {
@@ -168,7 +161,6 @@ public class EmployeeBook {
 
         return buff.toString();
     }
-
     public void employeesSalaryIndexation(Double percentIndexation) {
         for (Employee employee : employeeHashMap.values()) {
             employee.salaryIndexation(percentIndexation);

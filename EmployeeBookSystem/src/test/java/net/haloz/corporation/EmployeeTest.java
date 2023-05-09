@@ -5,7 +5,6 @@ import net.haloz.corporation.entities.Employee;
 import net.haloz.corporation.exceptions.EmployeeException;
 import net.haloz.corporation.exceptions.HashMapEmployeeException;
 import net.haloz.corporation.service.EmployeeBook;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +35,6 @@ public class EmployeeTest {
                 () -> assertEquals(Department.DEPARTMENT_1,employeeBook.getEmployee(id).getDepartment()),
                 () -> assertEquals(salary,employeeBook.getEmployee(id).getSalary()));
     }
-
     @Test
     void notCreateEmployeeWithInvalidData() {
         assertThrows(EmployeeException.class,
@@ -94,7 +92,6 @@ public class EmployeeTest {
             throw new RuntimeException(e);
         }
     }
-
     @Test
     void employeeDepartmentWasChangedInTwoWays() {
         Integer id = 3;

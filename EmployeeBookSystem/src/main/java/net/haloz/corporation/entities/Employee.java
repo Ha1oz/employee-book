@@ -1,9 +1,7 @@
 package net.haloz.corporation.entities;
 
 import lombok.Getter;
-import lombok.Setter;
 import net.haloz.corporation.exceptions.EmployeeException;
-import net.haloz.corporation.exceptions.HashMapEmployeeException;
 
 import java.util.Objects;
 
@@ -27,7 +25,6 @@ public class Employee {
         salary = newSalary;
         id++;
     }
-
     public void setSalary(double salary) throws EmployeeException {
         if (salary < 0d) {
             throw new EmployeeException("Salary cannot be negative");
@@ -41,11 +38,9 @@ public class Employee {
         }
         this.department = department;
     }
-
     public void salaryIndexation(Double percent) {
         salary += (salary / 100.0d * percent);
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,12 +48,10 @@ public class Employee {
         Employee employee = (Employee) o;
         return Objects.equals(surname, employee.surname) && Objects.equals(name, employee.name) && Objects.equals(fathersName, employee.fathersName);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(surname, name, fathersName);
     }
-
     @Override
     public String toString(){
         return String.format("[Id: %d; Surname: %s; Name: %s; FathersName: %s; Department: %s; Salary: %f]",
