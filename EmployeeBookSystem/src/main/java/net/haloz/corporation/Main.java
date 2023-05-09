@@ -2,44 +2,13 @@ package net.haloz.corporation;
 
 import net.haloz.corporation.entities.Department;
 import net.haloz.corporation.entities.Employee;
-import net.haloz.corporation.exceptions.EmployeeException;
-import net.haloz.corporation.exceptions.HashMapEmployeeException;
 import net.haloz.corporation.service.EmployeeBook;
 
 import java.util.List;
 
 public class Main {
     static EmployeeBook employeeBook = new EmployeeBook();
-    public static void main(String[] args) {
-
-        try {
-            employeeBook.addEmployee("Oleg", "Barkalov", "Alenovich",
-                    Department.DEPARTMENT_1, 23000d);
-            employeeBook.addEmployee("Alex", "Mironov", "Ivanovich",
-                    Department.DEPARTMENT_2, 200000d);
-            employeeBook.addEmployee("Alen", "Barkalov", "Albertovich",
-                    Department.DEPARTMENT_3, 400000d);
-            employeeBook.addEmployee("Lexa", "Mutno", "Hrenovich",
-                    Department.DEPARTMENT_4, 120000d);
-            employeeBook.addEmployee("Alexander", "Murno", "Vitaliych",
-                    Department.DEPARTMENT_5, 40000d);
-            employeeBook.addEmployee("Margaret", "Barkalova", "Sergevna",
-                    Department.DEPARTMENT_2, 45000d);
-            outputEmployees();
-            employeeBook.deleteEmployee(0);
-            employeeBook.changeEmployeeDepartment(1, Department.DEPARTMENT_5);
-
-
-        } catch (HashMapEmployeeException | EmployeeException e) {
-            throw new RuntimeException(e);
-        }
-
-        outputFullNameOfEmployees();
-
-
-
-
-    }
+    public static void main(String[] args) {}
 
     public static void outputEmployees() {
         System.out.println("--------------------------------------------Employees--------------------------------------------");
