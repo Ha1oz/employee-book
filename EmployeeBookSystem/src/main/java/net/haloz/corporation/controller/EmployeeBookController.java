@@ -1,10 +1,7 @@
 package net.haloz.corporation.controller;
 
 import net.haloz.corporation.entities.Department;
-import net.haloz.corporation.exceptions.EmployeeAlreadyAddedException;
-import net.haloz.corporation.exceptions.EmployeeBaseEmptyException;
-import net.haloz.corporation.exceptions.EmployeeInvalidDataException;
-import net.haloz.corporation.exceptions.EmployeeNotFoundException;
+import net.haloz.corporation.exceptions.*;
 import net.haloz.corporation.service.EmployeeBookService;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -22,22 +19,25 @@ public class EmployeeBookController {
     @NonNull
     public String addEmployee(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
         try {
-            employeeBookService.addEmployee(lastName, firstName, Department.DEPARTMENT_1, 0.0);
+            employeeBookService.addEmployee(lastName, firstName, Department.randomDepartment(), Department.randomSalary());
+        } catch (ArrayIsFullException e) {
+            e.printStackTrace();
+            return "Cannot add employee, the allowed number of employees is exceeded. Please try again later.";
         } catch (EmployeeInvalidDataException e) {
             e.printStackTrace();
-            return "Cannot add employee, invalid input data. Pls correct your request.";
+            return "Cannot add employee, invalid input data. Please correct your request.";
         } catch (EmployeeAlreadyAddedException e) {
             e.printStackTrace();
-            return "Cannot add employee, employee's already exist.";
+            return "Cannot add employee, employee is already exist.";
         }
-        return String.format("New employee %s %s is added", lastName, firstName);
+        return String.format("New employee %s %s is added", firstName, lastName);
     }
     @GetMapping("/find")
     @NonNull
-    public String findEmployee(@RequestParam("id") Integer employeeId) {
+    public String findEmployee(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
 
         try {
-             return employeeBookService.getEmployee(employeeId).toString();
+             return employeeBookService.getEmployee(firstName, lastName).toString();
         } catch (EmployeeBaseEmptyException e) {
             e.printStackTrace();
             return "Employee base is empty.";
@@ -48,16 +48,16 @@ public class EmployeeBookController {
     }
     @GetMapping("/remove")
     @NonNull
-    public String removeEmployee(@RequestParam("id") Integer employeeId) {
+    public String removeEmployee(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
         try {
-            employeeBookService.deleteEmployee(employeeId);
-            return "Employee was deleted from base.";
+            employeeBookService.deleteEmployee(firstName,lastName);
+            return "Employee was removed from base.";
         } catch (EmployeeBaseEmptyException e) {
             e.printStackTrace();
             return "Employee base is empty.";
         } catch (EmployeeNotFoundException e) {
             e.printStackTrace();
-            return "Cannot find employee in base. Pls correct your request.";
+            return "Cannot find employee in base. Please correct your request.";
         }
     }
     @GetMapping("/all")

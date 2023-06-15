@@ -2,45 +2,57 @@ package net.haloz.corporation.service;
 
 import net.haloz.corporation.entities.Department;
 import net.haloz.corporation.entities.Employee;
+import net.haloz.corporation.exceptions.ArrayIsFullException;
+import net.haloz.corporation.exceptions.EmployeeAlreadyAddedException;
 import net.haloz.corporation.exceptions.EmployeeBaseEmptyException;
 import net.haloz.corporation.exceptions.EmployeeNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class EmployeeBookService {
+    private static final Integer MAX_EMPLOYEES_NUMBER = 2;
     private final HashMap<Integer, Employee> employeeHashMap = new HashMap<>();
 
     public EmployeeBookService(){
         System.out.println("Base of employees is created.");
     }
     public void addEmployee(String surname, String name, Department department, Double salary){
+        if (employeeHashMap.size() >= MAX_EMPLOYEES_NUMBER) {
+            throw new ArrayIsFullException();
+        }
         Employee employee = new Employee(surname, name, department, salary);
-        employeeHashMap.put(employee.getEmployeeId(), employee);
+        Integer employeeId = employee.hashCode();
+        if (employeeHashMap.containsKey(employeeId)) {
+            throw new EmployeeAlreadyAddedException("The employee with id " + employeeId + " is already added.");
+        }
+        employeeHashMap.put(employeeId, employee);
     }
-    public Employee getEmployee(Integer employeeId){
+    public Employee getEmployee(String firstName, String lastName){
         if (employeeHashMap.isEmpty()) {
             throw new EmployeeBaseEmptyException();
+        }
+        Integer employeeId = Objects.hash(firstName, lastName);
+        if (!employeeHashMap.containsKey(employeeId)) {
+            throw new EmployeeNotFoundException("The employee with id " + employeeId + " not found");
         }
         return employeeHashMap.get(employeeId);
     }
-    public void deleteEmployee(Integer employeeId) {
+    public void deleteEmployee(String firstName, String lastName) {
         if (employeeHashMap.isEmpty()) {
             throw new EmployeeBaseEmptyException();
         }
+        Integer employeeId = Objects.hash(firstName, lastName);
         if (!employeeHashMap.containsKey(employeeId)) {
             throw new EmployeeNotFoundException("The employee with id " + employeeId + " not found");
         }
 
         employeeHashMap.remove(employeeId);
     }
-    public List<Employee> getAllEmployees() {
+    public HashMap<Integer, Employee> getAllEmployees() {
         if (employeeHashMap.isEmpty()) {
             throw new EmployeeBaseEmptyException();
         }
-        return new ArrayList<>(employeeHashMap.values());
+        return employeeHashMap;
     }
     public List<Employee> getAllEmployees(Department department) {
         if (employeeHashMap.isEmpty()) {
@@ -163,13 +175,15 @@ public class EmployeeBookService {
         return employeeHashMap.values().stream().filter(v -> v.getSalary() > value).toList();
     }
 
-    public void changeEmployeeSalary(Integer employeeId, Double newSalary) {
+    public void changeEmployeeSalary(String firstName, String lastName, Double newSalary) {
+        Integer employeeId = Objects.hash(firstName, lastName);
         if (!employeeHashMap.containsKey(employeeId)) {
             throw new EmployeeNotFoundException("The employee with id " + employeeId + " not found");
         }
         employeeHashMap.get(employeeId).setSalary(newSalary);
     }
-    public void changeEmployeeDepartment(Integer employeeId, Department department) {
+    public void changeEmployeeDepartment(String firstName, String lastName, Department department) {
+        Integer employeeId = Objects.hash(firstName, lastName);
         if (!employeeHashMap.containsKey(employeeId)) {
             throw new EmployeeNotFoundException("The employee with id " + employeeId + " not found");
         }

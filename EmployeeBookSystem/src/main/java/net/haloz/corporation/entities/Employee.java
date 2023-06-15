@@ -5,11 +5,8 @@ import lombok.NonNull;
 import net.haloz.corporation.exceptions.EmployeeInvalidDataException;
 
 import java.util.Objects;
-
 @Getter
 public class Employee {
-    private static int id;
-    private final int employeeId;
     private final String lastName, firstName;
     private Department department;
     private double salary = 0.0d;
@@ -22,12 +19,10 @@ public class Employee {
                     department,
                     salary));
         }
-        this.employeeId = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.department = department;
         this.salary = salary;
-        id++;
     }
     public void setSalary(double salary) {
         if (salary < 0d) {
@@ -51,12 +46,12 @@ public class Employee {
     }
     @Override
     public int hashCode() {
-        return Objects.hash(lastName, firstName);
+        return Objects.hash(firstName, lastName);
     }
     @Override
     public String toString(){
-        return String.format("{\"id\": %d; \"lastName\": \"%s\"; \"firstName\": \"%s\"; \"department\": \"%s\"; \"salary\": %f}",
-                employeeId, lastName, firstName, department.name(), salary);
+        return String.format("{\"firstName\": \"%s\"; \"lastName\": \"%s\"; \"department\": \"%s\"; \"salary\": %f}",
+                firstName, lastName, department.name(), salary);
     }
 
 
