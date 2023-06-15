@@ -1,7 +1,8 @@
 package net.haloz.corporation.entities;
 
 import lombok.Getter;
-import net.haloz.corporation.exceptions.EmployeeException;
+import lombok.NonNull;
+import net.haloz.corporation.exceptions.EmployeeInvalidDataException;
 
 import java.util.Objects;
 
@@ -9,33 +10,33 @@ import java.util.Objects;
 public class Employee {
     private static int id;
     private final int employeeId;
-    private final String surname, name, fathersName;
+    private final String lastName, firstName;
     private Department department;
     private double salary = 0.0d;
-
-    public  Employee(String newSurname, String newName, String newFathersName, Department newDepartment, Double newSalary) throws EmployeeException {
-        if (newSurname.isEmpty() || newName.isEmpty() || newFathersName.isEmpty() || newDepartment == null || newSalary < 0d) {
-            throw new EmployeeException("Invalid employee data");
+    @NonNull
+    public  Employee(String lastName, String firstName, Department department, Double salary) {
+        if (lastName.isEmpty() || firstName.isEmpty() || salary < 0d) {
+            throw new EmployeeInvalidDataException(String.format("Surname: %s; name: %s; Department: %s; salary: %f",
+                    lastName,
+                    firstName,
+                    department,
+                    salary));
         }
-        employeeId = id;
-        surname = newSurname;
-        name = newName;
-        fathersName = newFathersName;
-        department = newDepartment;
-        salary = newSalary;
+        this.employeeId = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.department = department;
+        this.salary = salary;
         id++;
     }
-    public void setSalary(double salary) throws EmployeeException {
+    public void setSalary(double salary) {
         if (salary < 0d) {
-            throw new EmployeeException("Salary cannot be negative");
+            throw new EmployeeInvalidDataException("Salary cannot be negative: " + salary);
         }
         this.salary = salary;
     }
-
-    public void setDepartment(Department department) throws EmployeeException {
-        if (department == null) {
-            throw new EmployeeException("Department cannot be null");
-        }
+    @NonNull
+    public void setDepartment(Department department) {
         this.department = department;
     }
     public void salaryIndexation(Double percent) {
@@ -46,16 +47,16 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(surname, employee.surname) && Objects.equals(name, employee.name) && Objects.equals(fathersName, employee.fathersName);
+        return Objects.equals(lastName, employee.lastName) && Objects.equals(firstName, employee.firstName);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(surname, name, fathersName);
+        return Objects.hash(lastName, firstName);
     }
     @Override
     public String toString(){
-        return String.format("[Id: %d; Surname: %s; Name: %s; FathersName: %s; Department: %s; Salary: %f]",
-                employeeId, surname, name, fathersName, department.name(), salary);
+        return String.format("{\"id\": %d; \"lastName\": \"%s\"; \"firstName\": \"%s\"; \"department\": \"%s\"; \"salary\": %f}",
+                employeeId, lastName, firstName, department.name(), salary);
     }
 
 
