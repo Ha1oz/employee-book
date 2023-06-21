@@ -10,7 +10,7 @@ import net.haloz.corporation.exceptions.EmployeeNotFoundException;
 import java.util.*;
 
 public class EmployeeBookService {
-    private static final Integer MAX_EMPLOYEES_NUMBER = 2;
+    private static final Integer MAX_EMPLOYEES_NUMBER = 20;
     private final HashMap<Integer, Employee> employeeHashMap = new HashMap<>();
 
     public EmployeeBookService(){
