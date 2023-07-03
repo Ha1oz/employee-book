@@ -3,6 +3,7 @@ package net.haloz.corporation.entities;
 import lombok.Getter;
 import lombok.NonNull;
 import net.haloz.corporation.exceptions.EmployeeInvalidDataException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 @Getter
@@ -12,15 +13,15 @@ public class Employee {
     private double salary = 0.0d;
     @NonNull
     public  Employee(String lastName, String firstName, Department department, Double salary) {
-        if (lastName.isEmpty() || firstName.isEmpty() || salary < 0d) {
+        if (!StringUtils.isAlpha(lastName) || !StringUtils.isAlpha(firstName) || salary < 0d) {
             throw new EmployeeInvalidDataException(String.format("Surname: %s; name: %s; Department: %s; salary: %f",
                     lastName,
                     firstName,
                     department,
                     salary));
         }
-        this.lastName = lastName;
-        this.firstName = firstName;
+        this.lastName = StringUtils.capitalize(lastName);
+        this.firstName = StringUtils.capitalize(firstName);
         this.department = department;
         this.salary = salary;
     }

@@ -3,8 +3,10 @@ package net.haloz.corporation.controller;
 import net.haloz.corporation.entities.Department;
 import net.haloz.corporation.exceptions.*;
 import net.haloz.corporation.service.EmployeeBookService;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/employee")
@@ -22,10 +24,10 @@ public class EmployeeBookController {
             employeeBookService.addEmployee(lastName, firstName, Department.randomDepartment(), Department.randomSalary());
         } catch (ArrayIsFullException e) {
             e.printStackTrace();
-            return "Cannot add employee, the allowed number of employees is exceeded. Please try again later.";
+            return "Cannot add employee, employee data is full";
         } catch (EmployeeInvalidDataException e) {
             e.printStackTrace();
-            return "Cannot add employee, invalid input data. Please correct your request.";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid input data", e);
         } catch (EmployeeAlreadyAddedException e) {
             e.printStackTrace();
             return "Cannot add employee, employee is already exist.";
