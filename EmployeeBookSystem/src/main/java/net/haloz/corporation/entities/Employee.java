@@ -8,20 +8,20 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Objects;
 @Getter
 public class Employee {
-    private final String lastName, firstName;
+    private final String firstName, lastName;
     private Department department;
     private double salary = 0.0d;
     @NonNull
-    public  Employee(String lastName, String firstName, Department department, Double salary) {
+    public  Employee(String firstName, String lastName, Department department, Double salary) {
         if (!StringUtils.isAlpha(lastName) || !StringUtils.isAlpha(firstName) || salary < 0d) {
-            throw new EmployeeInvalidDataException(String.format("Surname: %s; name: %s; Department: %s; salary: %f",
-                    lastName,
+            throw new EmployeeInvalidDataException(String.format("firstName: %s; lastName: %s; Department: %s; salary: %f",
                     firstName,
+                    lastName,
                     department,
                     salary));
         }
-        this.lastName = StringUtils.capitalize(lastName);
         this.firstName = StringUtils.capitalize(firstName);
+        this.lastName = StringUtils.capitalize(lastName);
         this.department = department;
         this.salary = salary;
     }

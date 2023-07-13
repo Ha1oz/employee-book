@@ -38,6 +38,12 @@ dependencies {
     compileOnly 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+
+    // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
+    compileOnly group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.4.0'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.4.0'
+    testRuntimeOnly group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.4.0'
+
 }
 
 test {
