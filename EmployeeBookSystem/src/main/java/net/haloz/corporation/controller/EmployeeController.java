@@ -2,13 +2,12 @@ package net.haloz.corporation.controller;
 
 import net.haloz.corporation.entities.Department;
 import net.haloz.corporation.entities.Employee;
-import net.haloz.corporation.service.EmployeeService;
+import net.haloz.corporation.service.api.EmployeeService;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/employee")
@@ -22,7 +21,8 @@ public class EmployeeController {
     @GetMapping("/add")
     @NonNull
     public void addEmployee(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        employeeService.addEmployee(firstName, lastName, Department.randomDepartment(), Department.randomSalary());
+        Employee employee = new Employee(firstName, lastName, Department.randomDepartment(), Department.randomSalary());
+        employeeService.addEmployee(employee);
     }
     @GetMapping("/find")
     @NonNull

@@ -20,12 +20,11 @@ public class EmployeeBook {
         LOGGER.info("Base of employees is created.");
     }
 
-    public void addEmployee(String firstName, String lastName, Department department, Double salary) {
-        Employee employee = new Employee(firstName, lastName, department, salary);
+    public void addEmployee(Employee employee) {
         if(employeeBook.values().stream().anyMatch(employees -> employees.contains(employee))){
             throw new EmployeeAlreadyAddedException("Employee is already added in base.");
         }
-        employeeBook.get(department.getId()).add(employee);
+        employeeBook.get(employee.getDepartment().getId()).add(employee);
         LOGGER.info("Employee is added.");
     }
     public Employee getEmployee(String firstName, String lastName) {
@@ -52,7 +51,7 @@ public class EmployeeBook {
         });
     }
     public Map<Integer, List<Employee>> getAllEmployees() {
-        return employeeBook;
+        return new HashMap<>(employeeBook);
     }
     public List<Employee> getAllEmployees(Department department) {
         return employeeBook.get(department.getId());

@@ -2,7 +2,7 @@ package net.haloz.corporation.controller;
 
 import net.haloz.corporation.entities.Department;
 import net.haloz.corporation.entities.Employee;
-import net.haloz.corporation.service.DepartmentService;
+import net.haloz.corporation.service.api.DepartmentService;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/department")
