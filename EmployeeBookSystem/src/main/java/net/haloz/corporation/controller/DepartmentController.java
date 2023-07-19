@@ -1,53 +1,49 @@
 package net.haloz.corporation.controller;
 
 import net.haloz.corporation.entities.Department;
-import net.haloz.corporation.service.EmployeeBookService;
+import net.haloz.corporation.entities.Employee;
+import net.haloz.corporation.service.api.DepartmentService;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/departments")
+@RequestMapping(value = "/department")
 public class DepartmentController {
-    private final EmployeeBookService employeeBookService;
+    private final DepartmentService departmentService;
 
-    public DepartmentController(EmployeeBookService employeeBookService) {
-        this.employeeBookService = employeeBookService;
-    }
-    @GetMapping("/max-salary")
-    @NonNull
-    public String outMaxSalaryEmployee(Integer departmentId) {
-        try {
-            return employeeBookService.employeeWithMaxSalary(Department.getDepartment(departmentId)).toString();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return "Cannot find employees with this params. Please correct your request.";
-        }
-    }
-    @GetMapping("/min-salary")
-    @NonNull
-    public String outMinSalaryEmployee(Integer departmentId) {
-        try {
-            return employeeBookService.employeeWithMinSalary(Department.getDepartment(departmentId)).toString();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return "Cannot find employees with this params. Please correct your request.";
-        }
-    }
-    @RequestMapping(value = "/all", params = "departmentId")
-    @NonNull
-    public String outAllEmployee(Integer departmentId) {
-        try {
-            return employeeBookService.getAllEmployees(Department.getDepartment(departmentId)).toString();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return "Cannot find employees with this params. Please correct your request.";
-        }
-    }
-    @RequestMapping(value = "/all")
-    public String outAllEmployee() {
-        return employeeBookService.fullNamesEmployees();
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
     }
 
+    @GetMapping("/{id}/employees")
+    @NonNull
+    public List<Employee> outAllEmployees(@PathVariable Integer id) {
+        return departmentService.getAllEmployees(Department.getDepartment(id));
+    }
+    @GetMapping("/{id}/salary/max")
+    @NonNull
+    public Double outMaxSalaryEmployee(@PathVariable Integer id) {
+        return departmentService.getMaxSalary(Department.getDepartment(id));
+    }
+    @GetMapping("/{id}/salary/min")
+    @NonNull
+    public Double outMinSalaryEmployee(@PathVariable Integer id) {
+        return departmentService.getMinSalary(Department.getDepartment(id));
+    }
+    @GetMapping("/{id}/salary/sum")
+    @NonNull
+    public Double outMonthlyPaymentSalary(@PathVariable Integer id) {
+        return departmentService.getEmployeesMonthlyPayment(Department.getDepartment(id));
+    }
+    @GetMapping("/employees")
+    @NonNull
+    public Map<Integer, List<Employee>> outAllDepartments() {
+        return departmentService.getAllEmployees();
+    }
 }
